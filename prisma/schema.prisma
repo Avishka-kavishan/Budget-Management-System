@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int               @id @default(autoincrement())
+  name             String
+  email            String            @unique
+  password         String
+  role             String            @default("user") // admin | zonal director | accountant | user
+  zoneId           Int?
+  zone             Zone?             @relation(fields: [zoneId], references: [id])
+  deletedAt        DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  estimatedBudgets EstimatedBudget[]
+  actualBudgets    ActualBudget[]
+}
+
+model Zone {
+  id        Int      @id @default(autoincrement())
+  zoneName  String   @unique
+  users     User[]
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id                  Int      @id @default(autoincrement())
+  strategy            String?
+  activityNo          String
+  activityDescription String
+  location            String?
+  q1                  String?
+  q2                  String?
+  q3                  String?
+  q4                  String?
+  budgetHead          String?
+  programme           String?
+  project             String?
+  objectCode          String?
+  noOfUnits           Int?
+  unitCost            Float    @default(0)
+  estimatedCostR      Float    @default(0)
+  estimatedCostC      Float    @default(0)
+  estimatedCostT      Float    @default(0)
+  kpi                 String?
+  fundingSource       String?
+  referencePlan       String?
+  galle               Float    @default(0)
+  ambalangoda         Float    @default(0)
+  elipitiya           Float    @default(0)
+  udugama             Float    @default(0)
+  matara              Float    @default(0)
+  akurassa            Float    @default(0)
+  mulkirigala         Float    @default(0)
+  deniyaya            Float    @default(0)
+  hambantota          Float    @default(0)
+  tangalle            Float    @default(0)
+  walasmulla          Float    @default(0)
+  pde                 Float    @default(0)
+  total               Float    @default(0)
+  status              String   @default("Pending")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Vote {
+  id             Int              @id @default(autoincrement())
+  voteNumber     String           @unique
+  description    String
+  totalAllocated Float            @default(0)
+  totalUsed      Float            @default(0)
+  remaining      Float            @default(0)
+  allocations    FundAllocation[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model FundAllocation {
+  id        Int      @id @default(autoincrement())
+  voteId    Int
+  vote      Vote     @relation(fields: [voteId], references: [id], onDelete: Cascade)
+  year      Int
+  month     Int
+  amount    Float    @default(0)
+  remarks   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EstimatedBudget {
+  id                            Int                   @id @default(autoincrement())
+  userId                        Int
+  user                          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  zone                          String
+  subject                       String
+  activityCode                  String
+  activityDescription           String
+  programme                     String?
+  vote                          String?
+  venue                         String?
+  date                          DateTime?
+  fundingSource                 String?
+  estimateAuthorizationCircular String?
+  dateSubmittedForSettlement    DateTime?
+  referenceFileNo               String?
+  invitedParticipants           String?
+  estimatedTotal                Float                 @default(0)
+  advanceDate                   DateTime?
+  advanceAmount                 Float?                @default(0)
+  totalExpenditure              Float?                @default(0)
+  balance                       Float?                @default(0)
+  deficitAmount                 Float?                @default(0)
+  preparedBy                    String?
+  status                        String                @default("pending") // pending | approved | rejected
+  createdAt                     DateTime              @default(now())
+  updatedAt                     DateTime              @updatedAt
+  items                         EstimatedBudgetItem[]
+  actualBudgets                 ActualBudget[]
+}
+
+model EstimatedBudgetItem {
+  id                Int             @id @default(autoincrement())
+  estimatedBudgetId Int
+  estimatedBudget   EstimatedBudget @relation(fields: [estimatedBudgetId], references: [id], onDelete: Cascade)
+  category          String
+  rate              Float           @default(0)
+  quantity          Float           @default(0)
+  daysHours         Float           @default(0)
+  amount            Float           @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model ActualBudget {
+  id                Int                @id @default(autoincrement())
+  estimatedBudgetId Int
+  estimatedBudget   EstimatedBudget    @relation(fields: [estimatedBudgetId], references: [id], onDelete: Cascade)
+  userId            Int
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  actualTotal       Float              @default(0)
+  balance           Float              @default(0)
+  deficitAmount     Float              @default(0)
+  preparedBy        String?
+  status            String             @default("pending") // pending | approved | rejected
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  items             ActualBudgetItem[]
+}
+
+model ActualBudgetItem {
+  id               Int          @id @default(autoincrement())
+  actualBudgetId   Int
+  actualBudget     ActualBudget @relation(fields: [actualBudgetId], references: [id], onDelete: Cascade)
+  category         String
+  estRate          Float        @default(0)
+  estQuantity      Float        @default(0)
+  estDaysHours     Float        @default(0)
+  estAmount        Float        @default(0)
+  actualRate       Float        @default(0)
+  actualQuantity   Float        @default(0)
+  actualDaysHours  Float        @default(0)
+  actualAmount     Float        @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
