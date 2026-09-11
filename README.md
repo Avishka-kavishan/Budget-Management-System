@@ -1,37 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 Budget Management System (ESDFP)
 
-## Getting Started
+A modern, full-stack Budget & Project Management web application built for education departments and organizations with Next.js 16, React 19, Tailwind CSS, Prisma ORM, and SQLite/PostgreSQL.
 
-First, run the development server:
+---
 
+## ✨ Features
+
+- **Multi-Role Authentication & Access Control:**
+  - **Admin:** Manage users, projects, voting sessions, and review all budgets.
+  - **Accountant:** Review submitted estimates, add accountant remarks, and verify actual expenditures.
+  - **User (Staff / Project Lead):** Create and track estimated and actual budgets, download Excel/PDF reports, vote on project proposals.
+- **Estimated & Actual Budget Lifecycles:** Complete multi-stage workflow from draft submission to accountant review and admin approval.
+- **Project Voting System:** Democratic voting module with secure token-verified ballots.
+- **Excel Export:** Automated spreadsheet export for budget submissions and reports.
+- **Modern Responsive UI:** Glassmorphism-inspired design with rich dashboards and status trackers.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router, Server Actions)
+- **UI Library:** [React 19](https://react.dev/) & [Tailwind CSS](https://tailwindcss.com/)
+- **Database & ORM:** [Prisma ORM](https://www.prisma.io/) (SQLite default, PostgreSQL compatible)
+- **Auth:** JWT authentication with [jose](https://github.com/panva/jose) & [bcryptjs](https://github.com/dcodeIO/bcrypt.js)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Spreadsheets:** [SheetJS (xlsx)](https://sheetjs.com/)
+
+---
+
+## 🚀 Quick Start (Local Development)
+
+### 1. Clone & Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Avishka-kavishan/Budget-Management-System.git
+cd Budget-Management-System
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment Variables
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Initialize Database & Seed
+```bash
+npx prisma db push
+npm run prisma:seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ☁️ Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Check out the full [Deployment Guide](DEPLOYMENT.md) for 1-click deploy instructions on:
+- **[Vercel](https://vercel.com)** (Recommended)
+- **[Render](https://render.com)** (Uses included `render.yaml`)
+- **[Railway](https://railway.app)**
+- **Docker / Self-Hosted** (Uses included `Dockerfile`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📄 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# Budget-Management-System" 
+This project is licensed under the MIT License.
