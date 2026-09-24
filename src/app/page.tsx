@@ -11,69 +11,89 @@ import {
   Vote,
   Building2,
   CheckCircle2,
+  Users,
+  BadgeCent,
+  Sparkles,
+  Award,
+  Clock,
+  Compass,
 } from "lucide-react";
 
 export default async function HomePage() {
   const user = await getCurrentUser();
 
-  const features = [
+  const workflowSteps = [
     {
+      step: "01",
       title: "Strategic Annual Work Plans",
-      description: "Manage province-wide educational strategies with quarterly scheduling and zonal cost distributions across 11 southern zones.",
+      desc: "Zonal directors and project coordinators align annual activities with quarterly milestones and estimated costs across all 11 zones.",
       icon: FileSpreadsheet,
-      color: "from-blue-600 to-indigo-600",
+      accent: "from-blue-600 to-indigo-600",
     },
     {
-      title: "17-Category Estimated Budgets",
-      description: "Standardized expenditure budgeting for allowances, venue hire, refreshments, and supervision with automated calculations.",
+      step: "02",
+      title: "17-Category Budget Proposal",
+      desc: "Officers specify standardized rates, quantities, and durations for resource allowances, hall charges, refreshments, and travel.",
       icon: Calculator,
-      color: "from-emerald-600 to-teal-600",
+      accent: "from-indigo-600 to-violet-600",
     },
     {
-      title: "Actual Expenditure Settlements",
-      description: "Submit and audit post-activity financial settlement reports with live advance balance vs. deficit tracking.",
+      step: "03",
+      title: "Advance Release & Approval",
+      desc: "Provincial administrators and accountants review compliance, authorized circulars, and approve advance fund commitments.",
       icon: ShieldCheck,
-      color: "from-amber-500 to-orange-600",
+      accent: "from-emerald-600 to-teal-600",
     },
     {
-      title: "Government Vote Ledgers",
-      description: "Periodic fund tranche allocations and automatic live balance deductions whenever actual settlements are approved.",
-      icon: Vote,
-      color: "from-purple-600 to-fuchsia-600",
+      step: "04",
+      title: "Post-Activity Settlement",
+      desc: "Submitting verified receipts automatically updates the live vote head ledger, clearing balances or flagging claimable deficits.",
+      icon: BadgeCent,
+      accent: "from-amber-500 to-orange-600",
     },
   ];
 
   const zones = [
-    "Galle", "Ambalangoda", "Elpitiya", "Udugama", "Matara",
-    "Akuressa", "Mulatiyana", "Deniyaya", "Hambantota", "Tangalle", "Walasmulla"
+    { name: "Galle", district: "Galle District" },
+    { name: "Ambalangoda", district: "Galle District" },
+    { name: "Elpitiya", district: "Galle District" },
+    { name: "Udugama", district: "Galle District" },
+    { name: "Matara", district: "Matara District" },
+    { name: "Akuressa", district: "Matara District" },
+    { name: "Mulatiyana", district: "Matara District" },
+    { name: "Deniyaya", district: "Matara District" },
+    { name: "Hambantota", district: "Hambantota District" },
+    { name: "Tangalle", district: "Hambantota District" },
+    { name: "Walasmulla", district: "Hambantota District" },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-slate-50 via-blue-50/30 to-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-blue-600 selection:text-white">
       <Navbar user={user ? { name: user.name, email: user.email, role: user.role } : null} />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32">
+      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-100/80 border border-blue-200 text-blue-800 text-xs font-bold uppercase tracking-wider mb-6 shadow-xs">
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Southern Province Education Department</span>
+          <div className="text-center max-w-4xl mx-auto">
+            {/* Department Badge */}
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-800 text-xs font-bold uppercase tracking-wider mb-6 shadow-2xs">
+              <Building2 className="w-4 h-4 text-blue-600" />
+              <span>Department of Education • Southern Province, Sri Lanka</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-              ESDFP Project &amp; <br />
+              Education Sector Development <br />
               <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-500 bg-clip-text text-transparent">
-                Budget Management System
+                Framework Programme (ESDFP)
               </span>
             </h1>
 
-            <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-              Unified digital platform for strategic project monitoring, 17-category proposal estimation,
-              fund allocation tracking, and post-activity settlement auditing.
+            <p className="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+              A modern, transparent governance platform designed to simplify 17-category proposal estimation,
+              accelerate fund disbursements, and automate post-activity vote ledger audits across 11 zonal education divisions.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
               {user ? (
                 <Link
                   href={
@@ -83,60 +103,90 @@ export default async function HomePage() {
                       ? "/accountant/dashboard"
                       : "/user/dashboard"
                   }
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-lg shadow-blue-500/25 transition-all hover:scale-105"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-2xl shadow-lg shadow-blue-500/25 transition-all hover:scale-105"
                 >
-                  <span>Go to My Dashboard</span>
+                  <span>Open My Workspace</span>
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               ) : (
                 <>
                   <Link
                     href="/login"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-lg shadow-blue-500/25 transition-all hover:scale-105"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-2xl shadow-lg shadow-blue-500/25 transition-all hover:scale-105"
                   >
                     <span>Sign In to Portal</span>
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
                   <Link
                     href="/register"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-xs transition-all hover:border-slate-300"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-2xl shadow-2xs transition-all hover:border-slate-300"
                   >
-                    <span>Register New Account</span>
+                    <span>Create Zonal Account</span>
                   </Link>
                 </>
               )}
             </div>
+
+            {/* Trust Metric Badges */}
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              <div className="p-4 rounded-2xl bg-white border border-slate-200/70 shadow-2xs">
+                <p className="text-2xl font-black text-blue-900">11 Zones</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Provincial Coverage</p>
+              </div>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200/70 shadow-2xs">
+                <p className="text-2xl font-black text-indigo-900">17 Categories</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Itemized Standard</p>
+              </div>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200/70 shadow-2xs">
+                <p className="text-2xl font-black text-emerald-900">Live Ledgers</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Vote Auto-Deduction</p>
+              </div>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200/70 shadow-2xs">
+                <p className="text-2xl font-black text-purple-900">Audited</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Treasury Compliant</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Decorative background blobs */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl -z-10 pointer-events-none" />
+        {/* Ambient Gradient Glows */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-blue-400/15 to-indigo-400/15 rounded-full blur-3xl -z-10 pointer-events-none" />
       </section>
 
-      {/* Feature Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Enterprise Financial &amp; Project Workflow
+      {/* Visual Workflow Steps */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200/70">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+            How The System Works
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-3">
+            Institutional Financial Lifecycle
           </h2>
-          <p className="mt-3 text-slate-600 text-sm">
-            Engineered to streamline institutional governance, transparent reporting, and strict audit compliance.
+          <p className="mt-2 text-slate-600 text-xs sm:text-sm">
+            From strategic annual planning to real-time vote deduction, every step is automated and transparent.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((f, i) => {
-            const Icon = f.icon;
+          {workflowSteps.map((s) => {
+            const Icon = s.icon;
             return (
               <div
-                key={i}
-                className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 group"
+                key={s.step}
+                className="human-card p-6 rounded-3xl bg-white relative flex flex-col justify-between"
               >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${f.color} flex items-center justify-center text-white mb-5 shadow-md transition-transform duration-300 group-hover:scale-110`}>
-                  <Icon className="w-6 h-6" />
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${s.accent} flex items-center justify-center text-white shadow-md`}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-2xl font-black text-slate-200 font-mono">
+                      {s.step}
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 mb-2">{s.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{s.desc}</p>
                 </div>
-                <h3 className="text-base font-bold text-slate-900 mb-2">{f.title}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{f.description}</p>
               </div>
             );
           })}
@@ -144,34 +194,46 @@ export default async function HomePage() {
       </section>
 
       {/* Supported Zonal Offices */}
-      <section className="bg-white/80 border-y border-slate-200/80 py-12">
+      <section className="bg-white border-y border-slate-200/80 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-bold uppercase tracking-wider text-slate-500 mb-6">
-            Serving 11 Educational Administrative Zones
-          </p>
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              Serving All 11 Educational Administrative Zones
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Coordinating across Galle, Matara, and Hambantota district directorates.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {zones.map((zone) => (
-              <span
-                key={zone}
-                className="inline-flex items-center px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 shadow-2xs"
+              <div
+                key={zone.name}
+                className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 hover:bg-blue-50/50 transition-all text-center group"
               >
-                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 text-blue-600" />
-                {zone} Zone
-              </span>
+                <p className="text-xs font-bold text-slate-800 group-hover:text-blue-900">
+                  {zone.name}
+                </p>
+                <p className="text-[10px] text-slate-400 mt-0.5">{zone.district}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
+      <footer className="mt-auto bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-          <div className="flex items-center space-x-2">
-            <Layers className="w-4 h-4 text-blue-400" />
-            <span className="font-bold text-white">ESDFP System</span>
-            <span>• Department of Education, Southern Province</span>
+          <div className="flex items-center space-x-2.5">
+            <div className="w-7 h-7 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold">
+              <Layers className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="font-bold text-white">ESDFP System</span>
+              <span className="text-slate-500 ml-2">Department of Education, Southern Province</span>
+            </div>
           </div>
-          <p>© 2026 Provincial Education Department. All rights reserved.</p>
+          <p>© 2026 Provincial Education Department, Sri Lanka. All rights reserved.</p>
         </div>
       </footer>
     </div>

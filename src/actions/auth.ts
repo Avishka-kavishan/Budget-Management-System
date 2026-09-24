@@ -142,3 +142,15 @@ export async function updateProfileAction(formData: FormData) {
   revalidatePath("/profile");
   return { success: true, message: "Profile updated successfully." };
 }
+
+export async function getCurrentSessionUserAction() {
+  const session = await getSession();
+  if (!session) return null;
+  return {
+    id: session.userId,
+    name: session.name,
+    email: session.email,
+    role: session.role,
+    zoneId: session.zoneId,
+  };
+}

@@ -4,7 +4,7 @@
   :root {
     --background: #f8fafc;
     --foreground: #0f172a;
-    --primary: #1e40af;
+    --primary: #1e3a8a;
     --primary-light: #3b82f6;
     --accent: #10b981;
     --card-bg: #ffffff;
@@ -16,23 +16,24 @@
     color: var(--foreground);
     font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Sleek Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -41,15 +42,44 @@
 
 /* Glassmorphism effects */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
 }
 
 .glass-card {
   background: rgba(255, 255, 255, 0.98);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 20px -2px rgba(14, 165, 233, 0.06);
+}
+
+.human-card {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 16px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.human-card:hover {
+  border-color: rgba(148, 163, 184, 0.6);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06), 0 12px 24px rgba(15, 23, 42, 0.03);
+}
+
+/* Print specific optimizations for budget printouts */
+@media print {
+  header, aside, .no-print {
+    display: none !important;
+  }
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
 }
